@@ -1,0 +1,49 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+header {
+    background-color: midnightblue;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+h1 {
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    color: white;
+    /* box-shadow: 1px 1px 1px 1px silver; */
+    border-bottom: 5px solid white;
+    border-radius: 0.2em;
+    margin-left: 0.5em;
+}
+
+h1 span {
+    font-family: 'Courier New', Courier, monospace;
+    color: yellow;
+}
+
+nav{
+    display: flex;
+    width: 70vw;
+    justify-content: space-evenly;
+}
+
+#favourites{
+    color: white;
+    margin-right: 1rem;
+    margin-top: 0.3rem;
+}
+
+#search{
+    padding: 0.2em;
+    padding-left: 0.5em;
+    width: 80%;
+    font-size: 1.2rem;
+}
+
+#search-box{
+    flex-grow: 2;
+}
