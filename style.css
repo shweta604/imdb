@@ -27,7 +27,7 @@ h1 span {
 
 nav{
     display: flex;
-    width: 70vw;
+    width: 80vw;
     justify-content: space-evenly;
 }
 
@@ -46,4 +46,21 @@ nav{
 
 #search-box{
     flex-grow: 2;
+}
+
+@media screen and (min-width: 500px){
+    h1{
+        margin-right: 1rem;
+    }
+    #favourites{
+        display: flex;
+        align-items: center;
+        margin-top: -0.2em;
+    }
+    #favourites span{
+        padding-left: 0.3em;
+    }
+    #search{
+        width: 95%;
+    }
 }
