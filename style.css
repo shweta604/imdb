@@ -1,7 +1,14 @@
+/* general style */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+}
+
+/* global variables */
+:root {
+    --primary-color: white;
+    --secondary-color: yellow;
 }
 
 header {
@@ -13,16 +20,16 @@ header {
 
 h1 {
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    color: white;
+    color: var(--primary-color);
     /* box-shadow: 1px 1px 1px 1px silver; */
-    border-bottom: 5px solid white;
+    border-bottom: 5px solid var(--primary-color);
     border-radius: 0.2em;
     margin-left: 0.5em;
 }
 
 h1 span {
     font-family: 'Courier New', Courier, monospace;
-    color: yellow;
+    color: var(--secondary-color);
 }
 
 nav{
@@ -32,23 +39,37 @@ nav{
 }
 
 #favourites{
-    color: white;
+    color: var(--primary-color);
     margin-right: 1rem;
     margin-top: 0.3rem;
+}
+
+.search-container{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    background: var(--primary-color);
+    width: 400px;
 }
 
 #search{
     padding: 0.2em;
     padding-left: 0.5em;
-    width: 80%;
     font-size: 1.2rem;
+    outline: none;
+    width: 100%;
+    border: none;
 }
 
-#search-box{
-    flex-grow: 2;
+/* media queries for header */
+@media screen and (max-width: 700px) {
+    .search-container{
+        width: 300px;
+    }
 }
 
-@media screen and (min-width: 500px){
+@media screen and (max-width: 550px) {
     h1{
         margin-right: 1rem;
     }
@@ -56,11 +77,46 @@ nav{
         display: flex;
         align-items: center;
         margin-top: -0.2em;
+        cursor: pointer;
     }
     #favourites span{
         padding-left: 0.3em;
     }
-    #search{
-        width: 95%;
+    .search-container{
+        width: 200px;
     }
+}
+
+.movie-list{
+    position: absolute;
+    max-height: 80vh;
+    overflow-y: scroll;
+    z-index: 10;
+    right: 0;
+    top: 100%;
+    list-style-type: none;
+}
+
+.search-item{
+    background: rgb(216, 231, 231);
+    padding: 0.5em;
+    display: flex;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid black;
+}
+
+.search-item:hover{
+    background: rgb(160, 192, 192);
+}
+
+.search-item h4{
+    padding-right: 1rem;
+}
+
+/* javascript related class */
+.search-list-hidden{
+    display: none;
 }
