@@ -4,7 +4,7 @@ const movieList = document.getElementById('search-list');
 // get movies from the api as per the user search
 async function searchMovies(searchInput) {
     // url to search 
-    const url = `http://www.omdbapi.com/?s=${searchInput}&page=1&apikey=f19863a8`;
+    const url = `https://www.omdbapi.com/?s=${searchInput}&page=1&apikey=f19863a8`;
     
     // fetch returns a promise
     const response = await fetch(`${url}`);
