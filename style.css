@@ -9,10 +9,11 @@
 :root {
     --primary-color: white;
     --secondary-color: yellow;
+    --tertiary-color: midnightblue;
 }
 
 header {
-    background-color: midnightblue;
+    background-color: var(--tertiary-color);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -105,7 +106,7 @@ nav{
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid var(--tertiary-color);
 }
 
 .search-item:hover{
@@ -119,4 +120,54 @@ nav{
 /* javascript related class */
 .search-list-hidden{
     display: none;
+}
+
+/* main */
+
+#container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.details{
+    width: 50vw;
+}
+
+.details h3{
+    color: var(--tertiary-color);
+    margin-bottom: 2rem;
+    text-transform: capitalize;
+    font-weight: 700;
+}
+
+.details p>b{
+    text-transform: uppercase;
+}
+
+.poster, .details{
+    margin: 2rem;
+}
+
+.poster img{
+    width: 20vw;
+    height: 70vh;
+}
+
+/* media queries for movie Page */
+@media screen and (max-width: 600px) {
+    #container{
+        display: flex;
+        flex-direction: column;
+    }
+
+    .poster, .details{
+        width: 80%;
+        margin: 1rem auto;
+    }
+
+    .poster img{
+        width: 80vw;
+        height: 80vh;
+    }
 }
