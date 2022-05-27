@@ -1,6 +1,11 @@
 const search = document.getElementById('search');
 const movieList = document.getElementById('search-list');
-const movieContainer = document.getElementById('container');
+const movieContainer = document.getElementById('movie-container');
+const favourites = document.getElementById('favourites');
+const favList = document.getElementById('favourite-list');
+const favContainer = document.getElementById('fav-container');
+const alert = document.getElementById('fav-alert');
+const alertText = document.getElementById('alert');
 
 // get movies from the api as per the user search
 async function searchMovies(searchInput) {
@@ -35,6 +40,11 @@ async function searchMovies(searchInput) {
     }
 }
 
+// empty the favourite page if the someone is typing
+search.addEventListener('click', function(){
+    favList.innerHTML = '';
+})
+
 // get what the user is typing
 function findMovies() {
     let searchInput = search.value;
@@ -67,17 +77,38 @@ function trackMovie() {
         const title = movieLi.children[0];
         const favourite = movieLi.children[1];
 
-        // go to the movie page by clicking on title
+        // fetch movie from api by clicking on title
         title.addEventListener('click', async()=> {
-            // empty the ul
+            // empty the search field
+            search.value = ``;
+
+           // empty the ul
             movieList.innerHTML = '';
 
+            // empty the fav container
+            favList.innerHTML = ``;
+
             // console.log(movieLi.dataset.id);
+
             // go to
             const movieURL = await fetch(`https://www.omdbapi.com/?i=${movieLi.dataset.id}&page=1&apikey=f19863a8`);
             const details = await movieURL.json();
-            console.log(details);
+            // console.log(details);
             displayMovie(details);
+        });
+
+        // fetch movie from api by clicking on fav and adding the movie to favourites
+        favourite.addEventListener('click', async()=> {
+            // console.log(movieLi.dataset.id);
+
+            // show alert that the movie has been added
+            showAlert();
+
+            // go to
+            const movieURL = await fetch(`https://www.omdbapi.com/?i=${movieLi.dataset.id}&page=1&apikey=f19863a8`);
+            const details = await movieURL.json();
+            // console.log(details);
+            addtofav(details);
         });
     });
 }
@@ -96,3 +127,117 @@ function displayMovie(details){
             <p><b>plot:</b> <i>${details.Plot}</i></p>
         </div>`;
 }
+
+// local storage is a property that allows javascript to store data in a browser.
+// CRUD operations can be performed using local storage.
+
+// as local storage takes key value pair i will create an array which will contain all movies added to favourites
+function favMovieList(){
+    let data = localStorage.getItem('favMovies') ? JSON.parse(localStorage.getItem('favMovies')) : []; // parse converts the data into javascript object
+    return data;
+}
+
+
+// add to favourites and local storage
+function addtofav(details){
+    let favItems = favMovieList();
+    
+    // check whether the movie already exists in favourites page
+    let flag = false;
+
+    favItems.forEach(favItem=>{
+        if(favItem.imdbID === details.imdbID){
+            flag = true;
+        }
+    })
+
+    if(!flag){
+        // push movie details in favItems so it will get added to favourite list
+        favItems.push(details);
+    }
+
+    // as local storage only takes string elements for json data its necessary to use stringify
+    // save the movie in local storage
+    localStorage.setItem('favMovies', JSON.stringify(favItems));
+    // console.log(window.localStorage);
+}
+
+// go to favourites page
+favourites.addEventListener('click', function(){
+    // make search field blank
+    search.innerHTML = ``;
+
+    // empty the ul
+    movieList.innerHTML = '';
+
+    // make movie page blank
+    movieContainer.innerHTML = ``;
+
+    // show favourites page
+    favContainer.classList.remove('fav-page-hidden');
+
+    search.addEventListener('click', ()=>{
+        // hide favourites page
+        favContainer.classList.add('fav-page-hidden');
+    })
+
+    // make favourite list blank to load it from scratch
+    favList.innerHTML = ``;
+
+    let favItems = favMovieList();
+
+    favItems.forEach(favItem=>{
+        const favMovieItem = document.createElement('div');
+        // display movie in favourites page
+        favMovieItem.innerHTML = `
+            <div class="card" style="width: 18rem; margin: 2rem" data-id="${favItem.imdbID}">
+                <img class="card-img-top" src="${favItem.Poster}" alt="${favItem.Title}">
+                <div class="card-body">
+                    <h5 class="card-title">${favItem.Title}</h5>
+                    <p class="card-text">${favItem.Plot}</p>
+                    <button class="btn btn-danger delete">Remove from Favourites</button>
+                </div>
+            </div>`;
+
+
+        const deletefavMovie = favMovieItem.querySelector('.delete');
+        deletefavMovie.addEventListener('click', deleteMovie);
+
+        // append the movies in the fav list
+        favList.append(favMovieItem);
+    })
+})
+
+// display alert when a movie is added to favourites
+function showAlert(){
+    alert.classList.remove('alertContainer-hidden');
+    setTimeout(function(){
+        alert.classList.add('alertContainer-hidden');
+    }, 1000);
+};
+
+
+// remove an item from the favourites list
+function deleteMovie(event){
+    // select the movie card to be deleted
+    const deleteItem = event.target.parentElement.parentElement;
+    // console.log(deleteItem);
+
+    let favItems = favMovieList();
+
+    const id = deleteItem.dataset.id;
+    // console.log(id);
+    
+    // remove the movie from favourite list
+    favList.remove(deleteItem);
+
+    // filter out all the movies which doesnt have the same id and return them
+    favItems = favItems.filter(function(favItem){
+        if(favItem.imdbID !== id){
+            return favItem;
+        }
+    });
+
+    // save the filtered items in local storage
+    localStorage.setItem('favMovies', JSON.stringify(favItems));
+};

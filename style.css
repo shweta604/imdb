@@ -12,6 +12,7 @@
     --tertiary-color: midnightblue;
 }
 
+/* heading style */
 header {
     background-color: var(--tertiary-color);
     display: flex;
@@ -33,6 +34,7 @@ h1 span {
     color: var(--secondary-color);
 }
 
+/* nav bar */
 nav{
     display: flex;
     width: 80vw;
@@ -43,6 +45,7 @@ nav{
     color: var(--primary-color);
     margin-right: 1rem;
     margin-top: 0.3rem;
+    cursor: pointer;
 }
 
 .search-container{
@@ -118,13 +121,30 @@ nav{
 }
 
 /* javascript related class */
-.search-list-hidden{
+.search-list-hidden, .fav-page-hidden, .alertContainer-hidden{
     display: none;
+}
+
+/* alert */
+#fav-alert{
+    position: relative;
+}
+
+#fav-alert p{
+    display: inline-block;
+    position: absolute;
+    top: 25%;
+    right: 0;
+    margin: 2rem;
+    padding: 0.3rem;
+    background: var(--secondary-color);
+    border-radius: 0.2em;
+    text-transform: capitalize;
 }
 
 /* main */
 
-#container {
+#movie-container {
     display: flex;
     justify-content: center;
     align-items: flex-start;
@@ -156,7 +176,7 @@ nav{
 
 /* media queries for movie Page */
 @media screen and (max-width: 600px) {
-    #container{
+    #movie-container{
         display: flex;
         flex-direction: column;
     }
@@ -170,4 +190,12 @@ nav{
         width: 80vw;
         height: 80vh;
     }
+}
+
+/* favourite page */
+#favourite-list{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    margin: 2rem;
 }
