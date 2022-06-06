@@ -218,6 +218,7 @@ function showAlert(){
 
 
 // remove an item from the favourites list
+// note: delete function is not working fine so you have to refresh the page to see the favourites page and the movie will be deleted.
 function deleteMovie(event){
     // select the movie card to be deleted
     const deleteItem = event.target.parentElement.parentElement;
